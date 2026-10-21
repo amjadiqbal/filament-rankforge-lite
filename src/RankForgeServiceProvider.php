@@ -26,6 +26,7 @@ class RankForgeServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_rankforge_meta_table',
                 'create_rankforge_meta_translations_columns',
+                'widen_rankforge_meta_url_columns',
             ])
             ->runsMigrations()
             ->hasTranslations()

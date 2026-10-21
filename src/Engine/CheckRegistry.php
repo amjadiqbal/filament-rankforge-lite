@@ -43,11 +43,27 @@ final class CheckRegistry
     }
 
     /**
+     * The built-in checks, tuned by the `rankforge.analysis` config:
+     *
+     *  - disabled_checks:       list of check ids to leave out, e.g. ['passive-voice'].
+     *  - weights_override:      check id => integer weight (0 or more), e.g. ['title-length' => 5].
+     *  - keyword_density_range: [min, max] percent that counts as ideal keyword density.
+     *  - content_length_tiers:  [ok, good, ...] word counts; the first two set the thresholds.
+     *
+     * Pass an array to override the config (the engine itself needs no framework: with no
+     * Laravel config available the built-in defaults are used).
+     *
+     * @param  array<string, mixed>|null  $config
      * @return Check[]
      */
-    public static function defaults(): array
+    public static function defaults(?array $config = null): array
     {
-        return [
+        $config ??= self::configuredAnalysis();
+
+        [$densityMin, $densityMax] = self::densityRange($config['keyword_density_range'] ?? null);
+        [$lengthOk, $lengthGood] = self::lengthTiers($config['content_length_tiers'] ?? null);
+
+        $checks = [
             new TitleLengthCheck,
             new TitleKeywordCheck,
             new MetaDescriptionLengthCheck,
@@ -56,8 +72,8 @@ final class CheckRegistry
             new SlugLengthCheck,
             new FirstParagraphKeywordCheck,
             new SubheadingsKeywordCheck,
-            new KeywordDensityCheck,
-            new ContentLengthCheck,
+            new KeywordDensityCheck(goodMin: $densityMin, goodMax: $densityMax),
+            new ContentLengthCheck(okThreshold: $lengthOk, goodThreshold: $lengthGood),
             new InternalLinksCheck,
             new OutboundLinksCheck,
             new ImageAltCheck,
@@ -71,6 +87,85 @@ final class CheckRegistry
             new ConsecutiveSentenceStartsCheck,
             new WordComplexityCheck,
         ];
+
+        $disabled = array_map('strval', array_filter((array) ($config['disabled_checks'] ?? []), 'is_scalar'));
+        $weights = [];
+
+        foreach ((array) ($config['weights_override'] ?? []) as $id => $weight) {
+            if (is_numeric($weight) && (int) $weight >= 0) {
+                $weights[(string) $id] = (int) $weight;
+            }
+        }
+
+        $configured = [];
+
+        foreach ($checks as $check) {
+            if (in_array($check->id(), $disabled, true)) {
+                continue;
+            }
+
+            $configured[] = isset($weights[$check->id()]) ? new WeightedCheck($check, $weights[$check->id()]) : $check;
+        }
+
+        return $configured;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function configuredAnalysis(): array
+    {
+        if (! function_exists('config')) {
+            return [];
+        }
+
+        try {
+            $config = config('rankforge.analysis');
+        } catch (\Throwable) {
+            return [];
+        }
+
+        return is_array($config) ? $config : [];
+    }
+
+    /**
+     * @return array{0: float, 1: float}
+     */
+    private static function densityRange(mixed $range): array
+    {
+        $default = [0.5, 2.5];
+
+        if (! is_array($range) || ! isset($range[0], $range[1]) || ! is_numeric($range[0]) || ! is_numeric($range[1])) {
+            return $default;
+        }
+
+        $min = (float) $range[0];
+        $max = (float) $range[1];
+
+        return ($min >= 0 && $max >= $min) ? [$min, $max] : $default;
+    }
+
+    /**
+     * @return array{0: int, 1: int}
+     */
+    private static function lengthTiers(mixed $tiers): array
+    {
+        $default = [300, 600];
+
+        if (! is_array($tiers)) {
+            return $default;
+        }
+
+        $tiers = array_values($tiers);
+
+        if (! isset($tiers[0], $tiers[1]) || ! is_numeric($tiers[0]) || ! is_numeric($tiers[1])) {
+            return $default;
+        }
+
+        $ok = (int) $tiers[0];
+        $good = (int) $tiers[1];
+
+        return ($ok > 0 && $good >= $ok) ? [$ok, $good] : $default;
     }
 
     public function withCheck(Check $check): self

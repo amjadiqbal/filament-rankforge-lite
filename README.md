@@ -156,7 +156,11 @@ class Post extends Model
 ```php
 return [
     'analysis' => [
-        'default_language' => 'en',      // en, es, fr, de, ar or ur
+        'default_language' => 'en',            // en, es, fr, de, ar or ur
+        'disabled_checks' => [],               // e.g. ['passive-voice']
+        'weights_override' => [],              // e.g. ['title-length' => 5]
+        'keyword_density_range' => [0.5, 2.5], // ideal keyphrase density, in percent
+        'content_length_tiers' => [300, 600, 900], // acceptable and good word counts
     ],
     'frontend' => [
         'site_name' => env('APP_NAME'),

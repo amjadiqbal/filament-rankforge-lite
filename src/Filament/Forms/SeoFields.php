@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AmjadIqbal\FilamentRankForge\Filament\Forms;
 
+use AmjadIqbal\FilamentRankForge\Models\RankForgeMeta;
 use Closure;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\RichEditor\RichContentRenderer;
@@ -104,7 +105,7 @@ final class SeoFields
                 TextInput::make('canonical_url')
                     ->label(__('rankforge::rankforge.fields.canonical_url'))
                     ->url()
-                    ->maxLength(255)
+                    ->maxLength(RankForgeMeta::URL_MAX_LENGTH)
                     ->live(debounce: 600),
 
                 CheckboxList::make('robots')
@@ -127,7 +128,7 @@ final class SeoFields
                         TextInput::make('og_image')
                             ->label(__('rankforge::rankforge.fields.og_image'))
                             ->url()
-                            ->maxLength(255)
+                            ->maxLength(RankForgeMeta::URL_MAX_LENGTH)
                             ->live(debounce: 600),
                     ]),
 

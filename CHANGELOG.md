@@ -4,6 +4,17 @@ All notable changes to `amjadiqbal/filament-rankforge-lite` are documented here,
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-21
+
+### Fixed
+
+- Keyword density counted adjacent repeats of the keyphrase once ("coffee coffee" counted as 1) and missed it before punctuation ("coffee."). It now counts whole-phrase matches.
+- Canonical URL and Open Graph image now accept URLs up to 2048 characters: a new migration widens both columns, matching the full RankForge suite.
+
+### Added
+
+- `analysis.disabled_checks`, `analysis.weights_override`, `analysis.keyword_density_range` and `analysis.content_length_tiers` config keys, with the same behaviour as RankForge.
+
 ## [1.0.0] - 2026-10-21
 
 ### Added

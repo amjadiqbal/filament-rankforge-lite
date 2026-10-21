@@ -13,11 +13,24 @@ return [
     | Analysis Engine
     |--------------------------------------------------------------------------
     |
-    | default_language is the language pack used when a record has none set:
-    | en, es, fr, de, ar or ur.
+    | Read by AmjadIqbal\FilamentRankForge\Engine\CheckRegistry, with the same
+    | keys and behaviour as the full RankForge suite.
+    |
+    |  default_language:      en, es, fr, de, ar or ur, used when a record has none.
+    |  disabled_checks:       check ids to leave out, e.g. ['passive-voice'].
+    |  weights_override:      check id => weight (0 or more), e.g. ['title-length' => 5].
+    |  keyword_density_range: [min, max] percent that counts as ideal density.
+    |  content_length_tiers:  word counts; the first two are the acceptable and
+    |                         good thresholds (the third is reserved).
+    |
+    | Invalid values fall back to the defaults shown here.
     |
     */
     'analysis' => [
+        'disabled_checks' => [],
+        'weights_override' => [],
+        'keyword_density_range' => [0.5, 2.5],
+        'content_length_tiers' => [300, 600, 900],
         'default_language' => 'en',
     ],
 

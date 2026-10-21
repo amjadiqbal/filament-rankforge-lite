@@ -15,6 +15,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class RankForgeMeta extends Model
 {
+    /**
+     * Longest canonical_url / og_image the form accepts and the columns hold (the
+     * 2026-10 widen_rankforge_meta_url_columns migration made the columns this long).
+     */
+    public const URL_MAX_LENGTH = 2048;
+
     protected $table = 'rankforge_meta';
 
     protected $guarded = [];

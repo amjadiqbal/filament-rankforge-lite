@@ -50,3 +50,7 @@ it('sorts using a subquery against rankforge_meta', function (): void {
 
     expect($sorted)->toBe(['Low', 'High']);
 });
+
+it('renders as solid coloured text, not a translucent badge (house no-brown rule)', function (): void {
+    expect(SeoScoreColumn::make()->isBadge())->toBeFalse();
+});
