@@ -5,6 +5,7 @@ declare(strict_types=1);
 use AmjadIqbal\FilamentRankForge\Tests\Fixtures\Post;
 use AmjadIqbal\FilamentRankForge\View\Components\Tags;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 
 beforeEach(function (): void {
@@ -179,4 +180,18 @@ it('uses the small summary X card when there is no image', function (): void {
 
     expect($html)->toContain('name="twitter:card" content="summary"')
         ->and($html)->not->toContain('twitter:image');
+});
+
+it('renders through a real <x-rankforge::tags> Blade tag', function (): void {
+    $html = Blade::render('<x-rankforge::tags title="Contact" description="Get in touch." />');
+
+    expect($html)->toContain('<title>Contact</title>')
+        ->and($html)->toContain('property="og:title" content="Contact"');
+});
+
+it('renders a model through a real Blade tag and the @rankforge directive', function (): void {
+    $post = Post::create(['title' => 'Best Coffee Beans', 'slug' => 'best-coffee-beans', 'content' => '<p>Coffee.</p>']);
+
+    expect(Blade::render('<x-rankforge::tags :model="$post" />', ['post' => $post]))->toContain('<title>Best Coffee Beans</title>')
+        ->and(Blade::render('@rankforge($post)', ['post' => $post]))->toContain('<title>Best Coffee Beans</title>');
 });

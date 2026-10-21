@@ -24,6 +24,14 @@ use Illuminate\View\Component;
 class Tags extends Component
 {
     /**
+     * Blade would otherwise expose meta() to the view as an invokable $meta
+     * variable, shadowing the array render() passes in.
+     *
+     * @var string[]
+     */
+    protected $except = ['meta'];
+
+    /**
      * @param  array<string, string>  $robots
      * @param  array<string, string>  $hreflang  locale => URL
      */
