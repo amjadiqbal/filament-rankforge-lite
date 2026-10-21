@@ -195,3 +195,11 @@ it('renders a model through a real Blade tag and the @rankforge directive', func
     expect(Blade::render('<x-rankforge::tags :model="$post" />', ['post' => $post]))->toContain('<title>Best Coffee Beans</title>')
         ->and(Blade::render('@rankforge($post)', ['post' => $post]))->toContain('<title>Best Coffee Beans</title>');
 });
+
+it('falls back to the default robots when the stored robots list is empty', function (): void {
+    $post = Post::create(['title' => 'Coffee', 'slug' => 'coffee', 'content' => '<p>Content.</p>']);
+    $post->rankforgeMeta->update(['robots' => []]);
+    $post->unsetRelation('rankforgeMeta');
+
+    expect((new Tags(model: $post))->render()->render())->toContain('name="robots" content="index, follow"');
+});

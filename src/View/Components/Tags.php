@@ -65,7 +65,8 @@ class Tags extends Component
         $title = $this->pick($this->title, $meta?->translatedMetaTitle(), $context?->title, config('rankforge.frontend.default_title'));
         $description = $this->pick($this->description, $meta?->translatedMetaDescription(), $context?->description, config('rankforge.frontend.default_description'));
         $canonical = $this->pick($this->canonicalUrl, $meta?->canonical_url, $context?->canonicalUrl) ?? url()->current();
-        $robots = $this->robots !== [] ? $this->robots : ($meta?->robots ?? config('rankforge.frontend.default_robots', ['index', 'follow']));
+        // An unticked CheckboxList saves [], which means "not set", not "no directives".
+        $robots = $this->robots !== [] ? $this->robots : ($meta?->robots ?: config('rankforge.frontend.default_robots', ['index', 'follow']));
         $ogTitle = $this->pick($this->ogTitle, $meta?->og_title, $title);
         $ogDescription = $this->pick($this->ogDescription, $meta?->og_description, $description);
         $ogImage = $this->pick($this->ogImage, $meta?->og_image, config('rankforge.frontend.default_og_image'));
