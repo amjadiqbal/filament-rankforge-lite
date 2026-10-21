@@ -7,6 +7,7 @@ namespace AmjadIqbal\FilamentRankForge\Filament\Forms;
 use AmjadIqbal\FilamentRankForge\Filament\Livewire\AnalysisPanel;
 use Closure;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -72,7 +73,7 @@ final class SeoFields
         ?Closure $getSlugUsing = null,
         ?string $relationship = 'rankforgeMeta',
     ): Section {
-        $getContentUsing ??= static fn (Get $get): string => (string) $get("../{$contentField}");
+        $getContentUsing ??= static fn (Get $get): string => self::contentHtml($get("../{$contentField}"));
         $getSlugUsing ??= static fn (Get $get): string => (string) $get("../{$slugField}");
 
         $dispatchUpdate = static function (Get $get, LivewireComponent $livewire) use ($getContentUsing, $getSlugUsing): void {
@@ -187,7 +188,7 @@ final class SeoFields
                 'description' => (string) ($field('meta_description') ?? ''),
                 'slug' => (string) ($get($slugField) ?? ''),
                 'canonicalUrl' => (string) ($field('canonical_url') ?? ''),
-                'contentHtml' => (string) ($get($contentField) ?? ''),
+                'contentHtml' => self::contentHtml($get($contentField)),
                 'focusKeyphrase' => (string) ($field('focus_keyphrase') ?? ''),
                 'relatedKeyphrases' => (array) ($field('related_keyphrases') ?? []),
                 'language' => (string) ($field('language') ?: config('rankforge.analysis.default_language', 'en')),
@@ -200,6 +201,19 @@ final class SeoFields
     }
 
     /**
+     * Content state as HTML: a RichEditor that stores JSON holds a TipTap
+     * document array rather than an HTML string.
+     */
+    public static function contentHtml(mixed $state): string
+    {
+        if (is_array($state)) {
+            return RichContentRenderer::make($state)->toHtml();
+        }
+
+        return is_scalar($state) ? (string) $state : '';
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private static function analysisData(Get $get, Closure $getContentUsing, Closure $getSlugUsing): array
@@ -209,7 +223,7 @@ final class SeoFields
             'description' => (string) ($get('meta_description') ?? ''),
             'slug' => (string) ($getSlugUsing($get) ?? ''),
             'canonicalUrl' => (string) ($get('canonical_url') ?? ''),
-            'contentHtml' => (string) ($getContentUsing($get) ?? ''),
+            'contentHtml' => self::contentHtml($getContentUsing($get)),
             'focusKeyphrase' => (string) ($get('focus_keyphrase') ?? ''),
             'relatedKeyphrases' => (array) ($get('related_keyphrases') ?? []),
             'language' => (string) ($get('language') ?: config('rankforge.analysis.default_language', 'en')),

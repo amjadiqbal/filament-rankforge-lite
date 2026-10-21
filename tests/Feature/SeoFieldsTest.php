@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use AmjadIqbal\FilamentRankForge\Filament\Forms\SeoFields;
 use AmjadIqbal\FilamentRankForge\Tests\Fixtures\Livewire\SeoFieldsTestComponent;
 use Filament\Schemas\Components\Section;
 
@@ -79,4 +80,12 @@ it('translates the robots checkbox options', function (): void {
         'max-snippet' => 'Max snippet',
         'max-image-preview' => 'Max image preview',
     ]);
+});
+
+it('reads RichEditor JSON state as HTML for the analysis', function (): void {
+    $doc = ['type' => 'doc', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Hello espresso']]]]];
+
+    expect(SeoFields::contentHtml($doc))->toContain('<p>Hello espresso</p>')
+        ->and(SeoFields::contentHtml('<p>Hi</p>'))->toBe('<p>Hi</p>')
+        ->and(SeoFields::contentHtml(null))->toBe('');
 });

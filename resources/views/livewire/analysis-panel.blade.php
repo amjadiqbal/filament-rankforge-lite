@@ -57,7 +57,8 @@
         .rfl-list { margin: .5rem 0 0; padding-inline-start: 1.75rem; list-style: disc; color: var(--rfl-muted); display: grid; gap: .25rem; }
         .rfl-tabs { display: inline-flex; gap: .25rem; margin-bottom: .5rem; }
         .rfl-tab { padding: .25rem .625rem; border-radius: .375rem; background: var(--rfl-soft); cursor: pointer; }
-        .rfl-tab[aria-pressed="true"] { background: var(--primary-600, #4f46e5); color: #fff; }
+        .rfl-tab[aria-pressed="true"] { background: rgb(17 24 39); color: #fff; font-weight: 600; }
+        .dark .rfl-tab[aria-pressed="true"] { background: #fff; color: rgb(17 24 39); }
         .rfl-serp { border: 1px solid var(--rfl-border); border-radius: .5rem; padding: .75rem 1rem; font-family: Arial, Helvetica, sans-serif; max-width: 600px; }
         .rfl-serp[data-device="mobile"] { max-width: 360px; }
         .rfl-serp-site { display: flex; align-items: center; gap: .5rem; font-size: .75rem; line-height: 1.3; min-width: 0; }
@@ -76,8 +77,7 @@
         .rfl-card-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .rfl-card-desc { font-size: .75rem; color: var(--rfl-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .rfl-upgrade { font-size: .75rem; color: var(--rfl-muted); }
-        .rfl-upgrade a { color: var(--primary-600, #4f46e5); text-decoration: underline; text-underline-offset: 2px; }
-        .dark .rfl-upgrade a { color: var(--primary-400, #818cf8); }
+        .rfl-upgrade a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
     </style>
 
     {{-- Score gauge + sub-scores --}}
