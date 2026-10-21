@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<g transform="translate(0,-34)">
+<rect x="128" y="304" width="56" height="128" rx="12" fill="#ffffff"/>
+<rect x="228" y="240" width="56" height="192" rx="12" fill="#ffffff"/>
+<rect x="328" y="152" width="56" height="280" rx="12" fill="#ffffff"/>
+<path d="M110 268 L 256 122 L 402 268" stroke="#ffffff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M256 122 L 256 180" stroke="#ffffff" stroke-width="30" stroke-linecap="round" fill="none"/>
+</g>
+<rect x="156" y="422" width="200" height="56" rx="28" fill="#111827"/>
+<text x="256" y="462" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="6" fill="#ffffff" text-anchor="middle">LITE</text>
+</svg>

@@ -1,0 +1,16 @@
+/vendor/
+composer.phar
+.phpunit.cache/
+.phpunit.result.cache
+.phpstan.cache/
+/build
+/coverage
+/node_modules
+.env
+.env.*
+*.sqlite
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
