@@ -13,11 +13,11 @@ parameters:
             identifier: trait.unused
             path: src/Concerns/HasSeo.php
         -
-            # rankforge::livewire.analysis-panel and rankforge::components.tags
+            # rankforge::filament.analysis-panel (used in SeoFields) and rankforge::components.tags
             # are real package views registered by ->hasViews(); larastan can't
             # resolve package view namespaces without booting the app.
             identifier: argument.type
-            path: src/Filament/Livewire/AnalysisPanel.php
+            path: src/Filament/Forms/SeoFields.php
         -
             identifier: argument.type
             path: src/View/Components/Tags.php

@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use AmjadIqbal\FilamentRankForge\Filament\Forms\AnalysisPanel;
 use AmjadIqbal\FilamentRankForge\Filament\Forms\SeoFields;
 use AmjadIqbal\FilamentRankForge\Tests\Fixtures\Livewire\SeoFieldsTestComponent;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 
 /**
  * SeoFields::make() returns a bare Section, which throws once you try to
@@ -88,4 +90,12 @@ it('reads RichEditor JSON state as HTML for the analysis', function (): void {
     expect(SeoFields::contentHtml($doc))->toContain('<p>Hello espresso</p>')
         ->and(SeoFields::contentHtml('<p>Hi</p>'))->toBe('<p>Hi</p>')
         ->and(SeoFields::contentHtml(null))->toBe('');
+});
+
+it('renders the analysis panel as a schema view inside the section', function (): void {
+    $view = collect(mountedSeoFieldsSection()->getChildComponents())
+        ->first(fn ($component) => $component instanceof View);
+
+    expect($view)->not->toBeNull()
+        ->and($view->getView())->toBe(AnalysisPanel::VIEW);
 });

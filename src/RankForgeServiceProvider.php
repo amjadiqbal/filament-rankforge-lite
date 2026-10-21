@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AmjadIqbal\FilamentRankForge;
 
-use AmjadIqbal\FilamentRankForge\Filament\Livewire\AnalysisPanel;
 use AmjadIqbal\FilamentRankForge\Models\RankForgeMeta;
 use AmjadIqbal\FilamentRankForge\View\Components\Tags;
 use Composer\InstalledVersions;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -39,11 +37,6 @@ class RankForgeServiceProvider extends PackageServiceProvider
         Blade::componentNamespace('AmjadIqbal\\FilamentRankForge\\View\\Components', 'rankforge');
 
         Blade::directive('rankforge', static fn (string $expression): string => '<?php echo \\'.Tags::class."::renderFor({$expression}); ?>");
-
-        // Livewire 3 (Filament 4) can't resolve a class-mounted component's
-        // generated name on later requests and answers them with a 419, so
-        // the panel gets an explicit name. Livewire 4 resolves it either way.
-        Livewire::component('rankforge-analysis-panel', AnalysisPanel::class);
 
         $this->registerScoreSync();
 

@@ -3,7 +3,8 @@
     utilities: a stock Filament 4/5 panel only ships the classes Filament itself
     uses, so arbitrary utilities in a plugin view would render unstyled unless
     the app builds a custom theme. The <style> block sits inside the root so it
-    survives Livewire re-renders. Score colours come from Filament's own
+    survives Livewire re-renders. The desktop/mobile switch is Alpine state, so
+    it needs no server round trip. Score colours come from Filament's own
     --danger/--warning/--success palette, used only as solid strokes, text and
     dots (never translucent fills).
 --}}
@@ -35,7 +36,7 @@
     $shareImage = $ogImage !== '' ? $ogImage : (string) config('rankforge.frontend.default_og_image', '');
 @endphp
 
-<div class="rfl">
+<div class="rfl" x-data="{ device: 'desktop' }">
     <style>
         .rfl { --rfl-border: rgb(229 231 235); --rfl-muted: rgb(107 114 128); --rfl-soft: rgb(249 250 251); --rfl-track: rgb(229 231 235); --rfl-link: #1a0dab;
             --rfl-good: var(--success-500, #10b981); --rfl-ok: var(--warning-500, #eab308); --rfl-bad: var(--danger-500, #ef4444);
@@ -130,15 +131,15 @@
     {{-- SERP preview --}}
     <div>
         <div class="rfl-tabs">
-            <button type="button" class="rfl-tab" wire:click="setSerpDevice('desktop')" aria-pressed="{{ $serpDevice === 'desktop' ? 'true' : 'false' }}">
+            <button type="button" class="rfl-tab" x-on:click="device = 'desktop'" x-bind:aria-pressed="device === 'desktop'" aria-pressed="true">
                 {{ __('rankforge::rankforge.analysis.desktop') }}
             </button>
-            <button type="button" class="rfl-tab" wire:click="setSerpDevice('mobile')" aria-pressed="{{ $serpDevice === 'mobile' ? 'true' : 'false' }}">
+            <button type="button" class="rfl-tab" x-on:click="device = 'mobile'" x-bind:aria-pressed="device === 'mobile'" aria-pressed="false">
                 {{ __('rankforge::rankforge.analysis.mobile') }}
             </button>
         </div>
 
-        <div class="rfl-serp" data-device="{{ $serpDevice }}">
+        <div class="rfl-serp" data-device="desktop" x-bind:data-device="device">
             <div class="rfl-serp-site">
                 <span class="rfl-serp-fav" aria-hidden="true"></span>
                 <span>

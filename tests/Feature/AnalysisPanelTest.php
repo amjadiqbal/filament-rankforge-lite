@@ -3,112 +3,72 @@
 declare(strict_types=1);
 
 use AmjadIqbal\FilamentRankForge\Engine\Report;
-use AmjadIqbal\FilamentRankForge\Filament\Livewire\AnalysisPanel;
+use AmjadIqbal\FilamentRankForge\Filament\Forms\AnalysisPanel;
 
-/**
- * Livewire::test() hits an unrelated ViewErrorBag/session plumbing error in
- * this Testbench environment (same issue worked around in SeoFieldsTest) —
- * so this exercises the component directly instead. That still covers the
- * part that matters: mount() mapping, refreshAnalysis()'s field merging,
- * report() computation, and setSerpDevice()'s validation. The #[On(...)]
- * event-dispatch wiring itself is Livewire's own well-tested plumbing, not
- * something this package needs to re-verify.
- */
-it('mounts with the given SEO data and computes a report', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount(title: 'A Fairly Short Title For This One', focusKeyphrase: 'coffee');
+function renderPanel(array $data): string
+{
+    return view(AnalysisPanel::VIEW, AnalysisPanel::viewData($data))->render();
+}
 
-    expect($panel->report())->toBeInstanceOf(Report::class)
-        ->and($panel->report()->results)->not->toBeEmpty();
+it('computes a report from the form data', function (): void {
+    $data = AnalysisPanel::viewData(['title' => 'A Fairly Short Title For This One', 'focusKeyphrase' => 'coffee']);
+
+    expect($data['report'])->toBeInstanceOf(Report::class)
+        ->and($data['report']->results)->not->toBeEmpty();
 });
 
 it('produces an empty report for empty data', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount();
-
-    $report = $panel->report();
+    $report = AnalysisPanel::viewData([])['report'];
 
     expect($report->results)->toBe([])
         ->and($report->score())->toBeNull();
 });
 
-it('merges incoming data onto existing state via refreshAnalysis, keeping unspecified fields', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount(title: 'Too Short', slug: 'existing-slug');
+it('ignores keys that are not ContentContext fields', function (): void {
+    $data = AnalysisPanel::viewData(['title' => 'Title', 'ogImage' => 'https://example.test/a.png', 'unknown' => 'x']);
 
-    $panel->refreshAnalysis([
+    expect($data['title'])->toBe('Title')
+        ->and($data['ogImage'])->toBe('https://example.test/a.png');
+});
+
+it('reads score thresholds and the upgrade-link switch from config', function (): void {
+    config(['rankforge.score_thresholds.red_below' => 30, 'rankforge.lite.show_upgrade_link' => false]);
+
+    $data = AnalysisPanel::viewData([]);
+
+    expect($data['redThreshold'])->toBe(30)
+        ->and($data['showUpgradeLink'])->toBeFalse()
+        ->and(renderPanel([]))->not->toContain('rankforge.amjad.com.pk');
+});
+
+it('renders the gauge, check groups, SERP preview and social cards for a populated report', function (): void {
+    $html = renderPanel([
         'title' => 'Best Coffee Beans for Espresso — The Complete Buying Guide',
-        'focusKeyphrase' => 'coffee',
+        'description' => str_repeat('a', 140),
+        'slug' => 'best-coffee-beans-for-espresso',
+        'contentHtml' => '<h2>Heading</h2><p>'.str_repeat('word ', 300).'</p>',
+        'focusKeyphrase' => 'best coffee beans for espresso',
+        'ogImage' => 'https://example.test/og.png',
     ]);
 
-    expect($panel->title)->toBe('Best Coffee Beans for Espresso — The Complete Buying Guide')
-        ->and($panel->focusKeyphrase)->toBe('coffee')
-        ->and($panel->slug)->toBe('existing-slug');
+    expect($html)->toContain('rfl-gauge')
+        ->and($html)->toContain('Best Coffee Beans for Espresso — The Complete Buying Guide')
+        ->and($html)->toContain('best-coffee-beans-for-espresso')
+        ->and($html)->toContain('src="https://example.test/og.png"')
+        ->and($html)->toContain("device = 'mobile'")
+        ->and($html)->toContain('rankforge.amjad.com.pk');
 });
 
-it('builds a ContentContext matching its own public state', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount(
-        title: 'Title',
-        description: 'Description',
-        slug: 'slug',
-        canonicalUrl: 'https://example.com/slug',
-        contentHtml: '<p>Body</p>',
-        focusKeyphrase: 'keyword',
-        relatedKeyphrases: ['related'],
-        language: 'es',
-        cornerstone: true,
-    );
+it('renders placeholders for an empty report', function (): void {
+    $html = renderPanel([]);
 
-    $context = $panel->toContentContext();
-
-    expect($context->title)->toBe('Title')
-        ->and($context->description)->toBe('Description')
-        ->and($context->slug)->toBe('slug')
-        ->and($context->canonicalUrl)->toBe('https://example.com/slug')
-        ->and($context->contentHtml)->toBe('<p>Body</p>')
-        ->and($context->focusKeyphrase)->toBe('keyword')
-        ->and($context->relatedKeyphrases)->toBe(['related'])
-        ->and($context->language)->toBe('es')
-        ->and($context->cornerstone)->toBeTrue();
+    expect($html)->toContain('Untitled')
+        ->and($html)->toContain('No image set');
 });
 
-it('toggles the SERP preview device between desktop and mobile, ignoring invalid values', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount();
+it('prefers the Open Graph overrides on the social cards', function (): void {
+    $html = renderPanel(['title' => 'Meta title', 'ogTitle' => 'Social title', 'ogDescription' => 'Social description']);
 
-    expect($panel->serpDevice)->toBe('desktop');
-
-    $panel->setSerpDevice('mobile');
-    expect($panel->serpDevice)->toBe('mobile');
-
-    $panel->setSerpDevice('not-a-real-device');
-    expect($panel->serpDevice)->toBe('mobile');
-});
-
-it('renders the Blade view without error for a populated report', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount(
-        title: 'Best Coffee Beans for Espresso — The Complete Buying Guide',
-        description: str_repeat('a', 140),
-        slug: 'best-coffee-beans-for-espresso',
-        contentHtml: '<h2>Heading</h2><p>'.str_repeat('word ', 300).'</p>',
-        focusKeyphrase: 'best coffee beans for espresso',
-    );
-
-    $html = $panel->render()->render();
-
-    expect($html)->toContain('SEO')
-        ->and($html)->not->toBeEmpty();
-});
-
-it('renders the Blade view without error for an empty report', function (): void {
-    $panel = new AnalysisPanel;
-    $panel->mount();
-
-    expect($panel->render()->render())->not->toBeEmpty();
-});
-
-it('registers the panel under a stable Livewire name, so Livewire 3 can resolve it on later requests', function (): void {
-    expect(app('livewire')->new('rankforge-analysis-panel'))->toBeInstanceOf(AnalysisPanel::class);
+    expect($html)->toContain('Social title')
+        ->and($html)->toContain('Social description');
 });
