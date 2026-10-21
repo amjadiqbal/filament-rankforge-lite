@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use AmjadIqbal\FilamentRankForge\Engine\Report;
 use AmjadIqbal\FilamentRankForge\Filament\Livewire\AnalysisPanel;
-use Livewire\Mechanisms\ComponentRegistry;
 
 /**
  * Livewire::test() hits an unrelated ViewErrorBag/session plumbing error in
@@ -111,5 +110,5 @@ it('renders the Blade view without error for an empty report', function (): void
 });
 
 it('registers the panel under a stable Livewire name, so Livewire 3 can resolve it on later requests', function (): void {
-    expect(app(ComponentRegistry::class)->getClass('rankforge-analysis-panel'))->toBe(AnalysisPanel::class);
+    expect(app('livewire')->new('rankforge-analysis-panel'))->toBeInstanceOf(AnalysisPanel::class);
 });
