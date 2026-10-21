@@ -21,9 +21,3 @@ parameters:
         -
             identifier: argument.type
             path: src/View/Components/Tags.php
-        -
-            # Tags accepts any duck-typed model, so $meta is genuinely null when
-            # there is no model or it doesn't use HasSeo (TagsComponentTest's
-            # static-mode tests cover that path).
-            identifier: nullsafe.neverNull
-            path: src/View/Components/Tags.php
