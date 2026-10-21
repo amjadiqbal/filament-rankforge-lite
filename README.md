@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="art/banner-dark.png">
-    <img alt="RankForge Lite: free SEO fields, live SEO and readability score, and SERP preview for Filament" src="art/banner-light.png" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amjadiqbal/filament-rankforge-lite/main/art/banner-dark.png">
+    <img alt="RankForge Lite: free SEO fields, live SEO and readability score, and SERP preview for Filament" src="https://raw.githubusercontent.com/amjadiqbal/filament-rankforge-lite/main/art/banner-light.png" width="100%">
   </picture>
 </p>
 
@@ -12,10 +12,10 @@ Free SEO for Filament 4 and 5. It adds meta, Open Graph and X (Twitter) fields t
 [![Latest Version](https://img.shields.io/packagist/v/amjadiqbal/filament-rankforge-lite.svg?style=flat-square)](https://packagist.org/packages/amjadiqbal/filament-rankforge-lite)
 [![PHP Version](https://img.shields.io/packagist/php-v/amjadiqbal/filament-rankforge-lite?style=flat-square)](https://packagist.org/packages/amjadiqbal/filament-rankforge-lite)
 [![Filament](https://img.shields.io/badge/Filament-4.x%20%7C%205.x-6D4AFF?style=flat-square)](https://filamentphp.com/plugins)
-[![License](https://img.shields.io/packagist/l/amjadiqbal/filament-rankforge-lite.svg?style=flat-square)](LICENSE.md)
+[![License](https://img.shields.io/packagist/l/amjadiqbal/filament-rankforge-lite.svg?style=flat-square)](https://github.com/amjadiqbal/filament-rankforge-lite/blob/main/LICENSE.md)
 
 <p align="center">
-  <img alt="The RankForge Lite SEO section in a Filament edit form: score gauge, check list, SERP preview and social cards" src="art/screenshot.png" width="100%">
+  <img alt="The RankForge Lite SEO section in a Filament edit form: score gauge, check list, SERP preview and social cards" src="https://raw.githubusercontent.com/amjadiqbal/filament-rankforge-lite/main/art/screenshot.png" width="100%">
 </p>
 
 ## Features
@@ -201,7 +201,7 @@ scripts/ci-local.sh   # all of the above on PHP 8.3 and 8.4, Laravel 12 and 13, 
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/amjadiqbal/filament-rankforge-lite/blob/main/CHANGELOG.md).
 
 ## Security Vulnerabilities
 
@@ -235,4 +235,4 @@ Part of a family of open-source packages. See [all of them](https://github.com/a
 
 ## License
 
-MIT. See [LICENSE.md](LICENSE.md).
+MIT. See [LICENSE.md](https://github.com/amjadiqbal/filament-rankforge-lite/blob/main/LICENSE.md).
