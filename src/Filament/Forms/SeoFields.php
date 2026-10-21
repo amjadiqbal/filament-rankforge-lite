@@ -17,11 +17,12 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\View;
 
 /**
- * Renders the SEO input fields plus the live analysis panel. titleField,
- * contentField and slugField (or the get*Using overrides) tell it how to read
- * the sibling fields outside this Section:
+ * Renders the SEO input fields plus the live analysis panel. contentField and
+ * slugField (or the getContentUsing/getSlugUsing overrides) tell it how to read
+ * the sibling fields outside this Section; without a meta title, the panel
+ * falls back to a sibling 'title' or 'name' field:
  *
- *   SeoFields::make(titleField: 'headline', contentField: 'body', slugField: 'permalink');
+ *   SeoFields::make(contentField: 'body', slugField: 'permalink');
  *
  * The Section is bound to the model's rankforgeMeta() morphOne relation (see
  * Concerns/HasSeo) via ->relationship('rankforgeMeta'), so the fields load
@@ -67,11 +68,12 @@ final class SeoFields
         ?Closure $getContentUsing = null,
         ?Closure $getSlugUsing = null,
         ?string $relationship = 'rankforgeMeta',
-        string $titleField = 'title',
     ): Section {
         $getContentUsing ??= static fn (Get $get): string => self::contentHtml($get("../{$contentField}"));
         $getSlugUsing ??= static fn (Get $get): string => (string) $get("../{$slugField}");
-        $getTitleUsing = static fn (Get $get): string => (string) $get("../{$titleField}");
+        // Keep this signature identical to RankForge's so an upgrade needs no
+        // code changes; the title fallback reads the same attributes HasSeo does.
+        $getTitleUsing = static fn (Get $get): string => (string) ($get('../title') ?: $get('../name'));
 
         $section = Section::make(__('rankforge::rankforge.fields.section_heading'))
             ->collapsible()

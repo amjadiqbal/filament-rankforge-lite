@@ -83,12 +83,12 @@ public static function form(Schema $schema): Schema
         TextInput::make('slug')->live(debounce: 600),
         RichEditor::make('content')->live(debounce: 600),
 
-        SeoFields::make(titleField: 'title', contentField: 'content', slugField: 'slug'),
+        SeoFields::make(contentField: 'content', slugField: 'slug'),
     ]);
 }
 ```
 
-The section loads and saves the record's `rankforge_meta` row through the `rankforgeMeta` relationship. The panel re-scores as you edit any SEO field. Mark the title, slug and content fields `->live()`, as above, and it follows those too. Without a meta title, the panel uses the record's own title, as the front-end tags do. RichEditor content works whether it's stored as HTML or JSON.
+The section loads and saves the record's `rankforge_meta` row through the `rankforgeMeta` relationship. The panel re-scores as you edit any SEO field. Mark the title, slug and content fields `->live()`, as above, and it follows those too. Without a meta title, the panel uses the form's `title` (or `name`) field. RichEditor content works whether it's stored as HTML or JSON.
 
 ### 3. Show the score in your table
 

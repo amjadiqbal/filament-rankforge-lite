@@ -46,7 +46,7 @@ for v in $PHP_VERSIONS; do
         DIR="$WORK/f$f-l$l-php$v"
         if [ "$l" = "13" ]; then EXTRA="--dev 'orchestra/testbench:^11.0'"; else EXTRA="--dev 'orchestra/testbench:^9.0|^10.0'"; fi
         git clone --quiet --no-hardlinks "$REPO" "$DIR" && git -C "$DIR" checkout --quiet --detach "$(git rev-parse HEAD)"
-        step "$TAG composer update" sh -c "\"$PHP\" \"$COMPOSER\" -d \"$DIR\" require --no-update --no-interaction $EXTRA 'filament/filament:^$f.0' && \"$PHP\" \"$COMPOSER\" -d \"$DIR\" update -W --no-interaction --no-progress --prefer-dist"
+        step "$TAG composer update" sh -c "\"$PHP\" \"$COMPOSER\" -d \"$DIR\" require --no-update --no-interaction 'filament/filament:^$f.0' && \"$PHP\" \"$COMPOSER\" -d \"$DIR\" require --no-update --no-interaction $EXTRA && \"$PHP\" \"$COMPOSER\" -d \"$DIR\" update -W --no-interaction --no-progress --prefer-dist"
       fi
       RESOLVED=$(cd "$DIR" && "$PHP" "$COMPOSER" show filament/filament 2>/dev/null | awk '/^versions/ {print $NF}')
       step "$TAG resolved Filament ${RESOLVED:-nothing}" sh -c "case '$RESOLVED' in v$f.*) exit 0 ;; *) exit 1 ;; esac"

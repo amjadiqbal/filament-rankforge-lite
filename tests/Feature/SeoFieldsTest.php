@@ -99,3 +99,9 @@ it('renders the analysis panel as a schema view inside the section', function ()
     expect($view)->not->toBeNull()
         ->and($view->getView())->toBe(AnalysisPanel::VIEW);
 });
+
+it('keeps SeoFields::make() parameters identical to the full RankForge suite, so upgrading needs no code changes', function (): void {
+    $params = array_map(fn (ReflectionParameter $p) => $p->getName(), (new ReflectionMethod(SeoFields::class, 'make'))->getParameters());
+
+    expect($params)->toBe(['contentField', 'slugField', 'getContentUsing', 'getSlugUsing', 'relationship']);
+});
