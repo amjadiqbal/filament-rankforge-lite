@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'SEO Score',
+    'fields' => [
+        'section_heading' => 'SEO',
+        'focus_keyphrase' => 'Focus keyphrase',
+        'related_keyphrases' => 'Related keyphrases',
+        'related_keyphrases_helper' => 'Up to 4 additional keyphrases to check this content against.',
+        'meta_title' => 'Meta title',
+        'meta_description' => 'Meta description',
+        'canonical_url' => 'Canonical URL',
+        'robots' => 'Robots',
+        'og_section_heading' => 'Social sharing (Open Graph & X)',
+        'og_section_description' => 'Used for Open Graph (Facebook, LinkedIn) and X (Twitter) cards. Empty fields fall back to the meta title and description.',
+        'og_title' => 'Title override',
+        'og_description' => 'Description override',
+        'og_image' => 'Image URL override',
+        'cornerstone' => 'Cornerstone content',
+        'language' => 'Language',
+    ],
+    'robots_options' => [
+        'index' => 'Index',
+        'noindex' => 'No index',
+        'follow' => 'Follow',
+        'nofollow' => 'No follow',
+        'noarchive' => 'No archive',
+        'nosnippet' => 'No snippet',
+        'max-snippet' => 'Max snippet',
+        'max-image-preview' => 'Max image preview',
+    ],
+    'analysis' => [
+        'untitled' => 'Untitled',
+        'no_description' => 'No description yet.',
+        'seo_score' => 'SEO',
+        'readability_score' => 'Readability',
+        'failed' => 'Failed',
+        'warnings' => 'Improvements',
+        'passed' => 'Good results',
+        'desktop' => 'Desktop',
+        'mobile' => 'Mobile',
+        'facebook' => 'Facebook',
+        'x' => 'X',
+        'linkedin' => 'LinkedIn',
+        'no_image' => 'No image set',
+        'upgrade_link' => 'Need redirects, sitemaps, AI autofill or OG images? See RankForge',
+    ],
+];

@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'SEO-Wert',
+    'fields' => [
+        'section_heading' => 'SEO',
+        'focus_keyphrase' => 'Fokus-Schlüsselwort',
+        'related_keyphrases' => 'Verwandte Schlüsselwörter',
+        'related_keyphrases_helper' => 'Bis zu 4 zusätzliche Schlüsselwörter, gegen die dieser Inhalt geprüft wird.',
+        'meta_title' => 'Meta-Titel',
+        'meta_description' => 'Meta-Beschreibung',
+        'canonical_url' => 'Kanonische URL',
+        'robots' => 'Robots',
+        'og_section_heading' => 'Social Sharing (Open Graph & X)',
+        'og_section_description' => 'Wird für Open Graph (Facebook, LinkedIn) und X-(Twitter-)Cards verwendet. Leere Felder übernehmen Meta-Titel und Meta-Beschreibung.',
+        'og_title' => 'Alternativer Titel',
+        'og_description' => 'Alternative Beschreibung',
+        'og_image' => 'Alternative Bild-URL',
+        'cornerstone' => 'Cornerstone-Inhalt',
+        'language' => 'Sprache',
+    ],
+    'robots_options' => [
+        'index' => 'Indexieren',
+        'noindex' => 'Nicht indexieren',
+        'follow' => 'Folgen',
+        'nofollow' => 'Nicht folgen',
+        'noarchive' => 'Nicht archivieren',
+        'nosnippet' => 'Kein Snippet',
+        'max-snippet' => 'Maximales Snippet',
+        'max-image-preview' => 'Maximale Bildvorschau',
+    ],
+    'analysis' => [
+        'untitled' => 'Unbenannt',
+        'no_description' => 'Noch keine Beschreibung.',
+        'seo_score' => 'SEO',
+        'readability_score' => 'Lesbarkeit',
+        'failed' => 'Fehlgeschlagen',
+        'warnings' => 'Verbesserungen',
+        'passed' => 'Gute Ergebnisse',
+        'desktop' => 'Desktop',
+        'mobile' => 'Mobil',
+        'facebook' => 'Facebook',
+        'x' => 'X',
+        'linkedin' => 'LinkedIn',
+        'no_image' => 'Kein Bild',
+        'upgrade_link' => 'Weiterleitungen, Sitemaps, KI-Ausfüllen oder OG-Bilder gesucht? Siehe RankForge',
+    ],
+];

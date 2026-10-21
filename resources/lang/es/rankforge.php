@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'Puntuación SEO',
+    'fields' => [
+        'section_heading' => 'SEO',
+        'focus_keyphrase' => 'Frase clave principal',
+        'related_keyphrases' => 'Frases clave relacionadas',
+        'related_keyphrases_helper' => 'Hasta 4 frases clave adicionales para analizar este contenido.',
+        'meta_title' => 'Meta título',
+        'meta_description' => 'Meta descripción',
+        'canonical_url' => 'URL canónica',
+        'robots' => 'Robots',
+        'og_section_heading' => 'Redes sociales (Open Graph y X)',
+        'og_section_description' => 'Se usa para Open Graph (Facebook, LinkedIn) y las tarjetas de X (Twitter). Los campos vacíos usan el meta título y la meta descripción.',
+        'og_title' => 'Título alternativo',
+        'og_description' => 'Descripción alternativa',
+        'og_image' => 'URL de imagen alternativa',
+        'cornerstone' => 'Contenido pilar',
+        'language' => 'Idioma',
+    ],
+    'robots_options' => [
+        'index' => 'Indexar',
+        'noindex' => 'No indexar',
+        'follow' => 'Seguir',
+        'nofollow' => 'No seguir',
+        'noarchive' => 'No archivar',
+        'nosnippet' => 'Sin fragmento',
+        'max-snippet' => 'Fragmento máximo',
+        'max-image-preview' => 'Vista previa de imagen máxima',
+    ],
+    'analysis' => [
+        'untitled' => 'Sin título',
+        'no_description' => 'Todavía no hay descripción.',
+        'seo_score' => 'SEO',
+        'readability_score' => 'Legibilidad',
+        'failed' => 'Errores',
+        'warnings' => 'Mejoras',
+        'passed' => 'Resultados correctos',
+        'desktop' => 'Escritorio',
+        'mobile' => 'Móvil',
+        'facebook' => 'Facebook',
+        'x' => 'X',
+        'linkedin' => 'LinkedIn',
+        'no_image' => 'Sin imagen',
+        'upgrade_link' => '¿Necesitas redirecciones, sitemaps, autocompletado con IA o imágenes OG? Mira RankForge',
+    ],
+];

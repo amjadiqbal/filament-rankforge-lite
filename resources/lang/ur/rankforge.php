@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'ایس ای او سکور',
+    'fields' => [
+        'section_heading' => 'ایس ای او',
+        'focus_keyphrase' => 'بنیادی کلیدی جملہ',
+        'related_keyphrases' => 'متعلقہ کلیدی جملے',
+        'related_keyphrases_helper' => 'اس مواد کا جائزہ لینے کے لیے مزید 4 کلیدی جملے تک۔',
+        'meta_title' => 'میٹا عنوان',
+        'meta_description' => 'میٹا تفصیل',
+        'canonical_url' => 'کینونیکل یو آر ایل',
+        'robots' => 'روبوٹس',
+        'og_section_heading' => 'سوشل شیئرنگ (Open Graph اور ایکس)',
+        'og_section_description' => 'یہ Open Graph (فیس بک، لنکڈ اِن) اور ایکس (ٹوئٹر) کارڈز کے لیے استعمال ہوتا ہے۔ خالی فیلڈز میٹا ٹائٹل اور میٹا تفصیل استعمال کرتی ہیں۔',
+        'og_title' => 'متبادل عنوان',
+        'og_description' => 'متبادل تفصیل',
+        'og_image' => 'متبادل تصویر کا یو آر ایل',
+        'cornerstone' => 'بنیادی مواد',
+        'language' => 'زبان',
+    ],
+    'robots_options' => [
+        'index' => 'انڈیکس کریں',
+        'noindex' => 'انڈیکس نہ کریں',
+        'follow' => 'فالو کریں',
+        'nofollow' => 'فالو نہ کریں',
+        'noarchive' => 'آرکائیو نہ کریں',
+        'nosnippet' => 'بغیر اسنیپیٹ',
+        'max-snippet' => 'زیادہ سے زیادہ اسنیپیٹ',
+        'max-image-preview' => 'زیادہ سے زیادہ تصویری پیش منظر',
+    ],
+    'analysis' => [
+        'untitled' => 'بلا عنوان',
+        'no_description' => 'ابھی تک کوئی تفصیل نہیں۔',
+        'seo_score' => 'ایس ای او',
+        'readability_score' => 'پڑھنے میں آسانی',
+        'failed' => 'ناکام',
+        'warnings' => 'بہتری کے مواقع',
+        'passed' => 'اچھے نتائج',
+        'desktop' => 'ڈیسک ٹاپ',
+        'mobile' => 'موبائل',
+        'facebook' => 'فیس بک',
+        'x' => 'ایکس',
+        'linkedin' => 'لنکڈان',
+        'no_image' => 'کوئی تصویر نہیں',
+        'upgrade_link' => 'ری ڈائریکٹس، سائٹ میپس، اے آئی آٹو فِل یا OG تصاویر چاہییں؟ RankForge دیکھیں',
+    ],
+];

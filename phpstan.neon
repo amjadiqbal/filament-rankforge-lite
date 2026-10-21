@@ -1,0 +1,29 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - src
+
+    ignoreErrors:
+        -
+            # HasSeo is public API for the consuming app's own models (see
+            # tests/Fixtures/Post.php); nothing in src/ uses it itself.
+            identifier: trait.unused
+            path: src/Concerns/HasSeo.php
+        -
+            # rankforge::livewire.analysis-panel and rankforge::components.tags
+            # are real package views registered by ->hasViews(); larastan can't
+            # resolve package view namespaces without booting the app.
+            identifier: argument.type
+            path: src/Filament/Livewire/AnalysisPanel.php
+        -
+            identifier: argument.type
+            path: src/View/Components/Tags.php
+        -
+            # Tags accepts any duck-typed model, so $meta is genuinely null when
+            # there is no model or it doesn't use HasSeo (TagsComponentTest's
+            # static-mode tests cover that path).
+            identifier: nullsafe.neverNull
+            path: src/View/Components/Tags.php

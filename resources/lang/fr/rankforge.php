@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'Score SEO',
+    'fields' => [
+        'section_heading' => 'SEO',
+        'focus_keyphrase' => 'Expression clé principale',
+        'related_keyphrases' => 'Expressions clés associées',
+        'related_keyphrases_helper' => 'Jusqu\'à 4 expressions clés supplémentaires pour analyser ce contenu.',
+        'meta_title' => 'Méta-titre',
+        'meta_description' => 'Méta-description',
+        'canonical_url' => 'URL canonique',
+        'robots' => 'Robots',
+        'og_section_heading' => 'Partage social (Open Graph et X)',
+        'og_section_description' => 'Utilisé pour Open Graph (Facebook, LinkedIn) et les cartes X (Twitter). Les champs vides reprennent le méta-titre et la méta-description.',
+        'og_title' => 'Titre personnalisé',
+        'og_description' => 'Description personnalisée',
+        'og_image' => 'URL de l\'image personnalisée',
+        'cornerstone' => 'Contenu pilier',
+        'language' => 'Langue',
+    ],
+    'robots_options' => [
+        'index' => 'Indexer',
+        'noindex' => 'Ne pas indexer',
+        'follow' => 'Suivre',
+        'nofollow' => 'Ne pas suivre',
+        'noarchive' => 'Ne pas archiver',
+        'nosnippet' => 'Pas d\'extrait',
+        'max-snippet' => 'Extrait maximal',
+        'max-image-preview' => 'Aperçu d\'image maximal',
+    ],
+    'analysis' => [
+        'untitled' => 'Sans titre',
+        'no_description' => 'Pas encore de description.',
+        'seo_score' => 'SEO',
+        'readability_score' => 'Lisibilité',
+        'failed' => 'Échecs',
+        'warnings' => 'Améliorations',
+        'passed' => 'Bons résultats',
+        'desktop' => 'Bureau',
+        'mobile' => 'Mobile',
+        'facebook' => 'Facebook',
+        'x' => 'X',
+        'linkedin' => 'LinkedIn',
+        'no_image' => 'Aucune image',
+        'upgrade_link' => 'Besoin de redirections, de sitemaps, de remplissage par IA ou d’images OG ? Découvrez RankForge',
+    ],
+];

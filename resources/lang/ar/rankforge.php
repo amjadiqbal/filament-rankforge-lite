@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'seo_score' => 'نتيجة السيو',
+    'fields' => [
+        'section_heading' => 'السيو',
+        'focus_keyphrase' => 'الكلمة المفتاحية الرئيسية',
+        'related_keyphrases' => 'الكلمات المفتاحية ذات الصلة',
+        'related_keyphrases_helper' => 'حتى 4 كلمات مفتاحية إضافية لتحليل هذا المحتوى مقابلها.',
+        'meta_title' => 'العنوان الوصفي',
+        'meta_description' => 'الوصف التعريفي',
+        'canonical_url' => 'الرابط الأساسي',
+        'robots' => 'روبوتات',
+        'og_section_heading' => 'المشاركة الاجتماعية (Open Graph وإكس)',
+        'og_section_description' => 'يُستخدم في Open Graph (فيسبوك ولينكدإن) وبطاقات إكس (تويتر). الحقول الفارغة تستخدم عنوان الميتا ووصفه.',
+        'og_title' => 'عنوان بديل',
+        'og_description' => 'وصف بديل',
+        'og_image' => 'رابط صورة بديلة',
+        'cornerstone' => 'محتوى أساسي',
+        'language' => 'اللغة',
+    ],
+    'robots_options' => [
+        'index' => 'فهرسة',
+        'noindex' => 'عدم الفهرسة',
+        'follow' => 'تتبع',
+        'nofollow' => 'عدم التتبع',
+        'noarchive' => 'عدم الأرشفة',
+        'nosnippet' => 'بدون مقتطف',
+        'max-snippet' => 'الحد الأقصى للمقتطف',
+        'max-image-preview' => 'الحد الأقصى لمعاينة الصورة',
+    ],
+    'analysis' => [
+        'untitled' => 'بدون عنوان',
+        'no_description' => 'لا يوجد وصف بعد.',
+        'seo_score' => 'السيو',
+        'readability_score' => 'سهولة القراءة',
+        'failed' => 'أخطاء',
+        'warnings' => 'تحسينات',
+        'passed' => 'نتائج جيدة',
+        'desktop' => 'سطح المكتب',
+        'mobile' => 'الجوال',
+        'facebook' => 'فيسبوك',
+        'x' => 'إكس',
+        'linkedin' => 'لينكدإن',
+        'no_image' => 'لا توجد صورة',
+        'upgrade_link' => 'تحتاج إلى عمليات إعادة التوجيه أو خرائط الموقع أو التعبئة بالذكاء الاصطناعي أو صور OG؟ اطّلع على RankForge',
+    ],
+];

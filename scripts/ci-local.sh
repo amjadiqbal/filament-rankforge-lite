@@ -2,7 +2,7 @@
 # Local CI (CONTRIBUTING.md → "CI is local"): the Tests workflow is disabled, so every PR runs this and pastes the
 # summary into its body. For each PHP version (default 8.3 and 8.4) x Laravel major (default 12 and 13) x Filament
 # major (default 5 and 4):
-#   - Laravel 12 + Filament 5: composer install from the committed lock file, PHPStan (composer analyse), PHPUnit
+#   - Laravel 13 + Filament 5: composer install from the committed lock file, PHPStan (composer analyse), PHPUnit
 #   - every other combination: a throwaway clone of HEAD, composer.json narrowed to filament/filament ^N.0 and to the
 #     Testbench that matches the Laravel major (^9|^10 for 12, ^11 for 13, since composer.json allows all of them and
 #     would otherwise resolve to the newest), composer update, then the same PHPStan and PHPUnit runs (the lock file
@@ -39,7 +39,7 @@ for v in $PHP_VERSIONS; do
   for l in $LARAVEL_VERSIONS; do
     for f in $FILAMENT_VERSIONS; do
       TAG="PHP $v Laravel $l Filament $f"
-      if [ "$l" = "12" ] && [ "$f" = "5" ]; then
+      if [ "$l" = "13" ] && [ "$f" = "5" ]; then
         DIR=$REPO
         step "$TAG composer install (lock)" "$PHP" "$COMPOSER" -d "$DIR" install --no-interaction --no-progress --prefer-dist
       else
