@@ -19,6 +19,25 @@ final class KeywordDensityCheck implements Check
         private readonly int $weight = 8,
     ) {}
 
+    /**
+     * Whole-word occurrences of the keyphrase, case-insensitive, with any whitespace between its
+     * words. Boundaries are lookarounds, so they do not consume the separator: back-to-back
+     * repeats ("espresso espresso") each count, and punctuation next to the phrase ("espresso,")
+     * does not hide it. The old ' kw ' substr_count() missed both, which skewed the score.
+     */
+    private function countOccurrences(string $plainText, string $keyphrase): int
+    {
+        $words = preg_split('/\s+/u', mb_strtolower(trim($keyphrase)), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        if ($words === []) {
+            return 0;
+        }
+
+        $pattern = '/(?<![\p{L}\p{N}])'.implode('\\s+', array_map(static fn (string $word): string => preg_quote($word, '/'), $words)).'(?![\p{L}\p{N}])/u';
+
+        return (int) preg_match_all($pattern, mb_strtolower($plainText));
+    }
+
     public function id(): string
     {
         return 'keyword-density';
@@ -43,7 +62,7 @@ final class KeywordDensityCheck implements Check
     {
         $extracted = $context->extracted();
 
-        $occurrences = self::countOccurrences($extracted->plainText, $context->focusKeyphrase);
+        $occurrences = $this->countOccurrences($extracted->plainText, $context->focusKeyphrase);
 
         $density = ($occurrences / $extracted->wordCount) * 100;
         $formatted = round($density, 2);
@@ -63,25 +82,5 @@ final class KeywordDensityCheck implements Check
         };
 
         return new CheckResult($this->id(), $this->group(), $status, $message, $this->weight);
-    }
-
-    /**
-     * Whole-phrase matches, case-insensitive. A match may not touch another letter or digit
-     * on either side, so adjacent repeats ("coffee coffee") each count and punctuation after
-     * the phrase ("coffee.") still counts, while "coffees" does not match "coffee". Space-
-     * padded substr_count() missed both: the shared space made repeats overlap, and the
-     * trailing space never matched before punctuation.
-     */
-    public static function countOccurrences(string $text, string $keyphrase): int
-    {
-        $words = preg_split('/\s+/u', mb_strtolower(trim($keyphrase)), -1, PREG_SPLIT_NO_EMPTY) ?: [];
-
-        if ($words === []) {
-            return 0;
-        }
-
-        $phrase = implode('\s+', array_map(static fn (string $word): string => preg_quote($word, '/'), $words));
-
-        return (int) preg_match_all('/(?<![\p{L}\p{N}])'.$phrase.'(?![\p{L}\p{N}])/u', mb_strtolower($text));
     }
 }
