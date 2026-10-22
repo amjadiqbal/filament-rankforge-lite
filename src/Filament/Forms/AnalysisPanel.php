@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AmjadIqbal\FilamentRankForge\Filament\Forms;
 
 use AmjadIqbal\FilamentRankForge\Engine\ContentContext;
+use AmjadIqbal\FilamentRankForge\Engine\Report;
 use AmjadIqbal\FilamentRankForge\Engine\SeoAnalyzer;
 
 /**
@@ -30,8 +31,16 @@ final class AnalysisPanel
             'focusKeyphrase', 'relatedKeyphrases', 'language', 'cornerstone',
         ])));
 
+        // Related keyphrases run the keyword checks on their own and get their own mini score;
+        // they don't change the overall score, which stays the one HasSeo stores.
+        $related = [];
+        foreach (SeoAnalyzer::analyzer()->analyzeKeyphrases($context) as $keyphrase => $results) {
+            $related[] = ['keyphrase' => (string) $keyphrase, 'report' => new Report($results)];
+        }
+
         return [
             'report' => SeoAnalyzer::analyze($context),
+            'related' => $related,
             'title' => $context->title,
             'description' => $context->description,
             'slug' => $context->slug,

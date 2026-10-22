@@ -72,3 +72,54 @@ it('prefers the Open Graph overrides on the social cards', function (): void {
     expect($html)->toContain('Social title')
         ->and($html)->toContain('Social description');
 });
+
+function relatedContext(array $related): array
+{
+    return [
+        'title' => 'Best Coffee Beans for Espresso: A Buying Guide',
+        'description' => 'Find the best coffee beans for espresso and learn how espresso beans differ.',
+        'slug' => 'best-coffee-beans-for-espresso',
+        'contentHtml' => '<p>Choosing the best coffee beans for espresso matters.</p><h2>Espresso beans</h2><p>'.str_repeat('word ', 200).'</p>',
+        'focusKeyphrase' => 'best coffee beans for espresso',
+        'relatedKeyphrases' => $related,
+    ];
+}
+
+it('scores each related keyphrase on its own', function (): void {
+    $data = AnalysisPanel::viewData(relatedContext(['espresso beans', 'french press']));
+
+    expect(array_column($data['related'], 'keyphrase'))->toBe(['espresso beans', 'french press'])
+        ->and($data['related'][0]['report'])->toBeInstanceOf(Report::class)
+        ->and($data['related'][0]['report']->score())->toBeGreaterThan($data['related'][1]['report']->score());
+});
+
+it('does not let related keyphrases change the overall score', function (): void {
+    $without = AnalysisPanel::viewData(relatedContext([]))['report']->score();
+    $with = AnalysisPanel::viewData(relatedContext(['french press', 'cold brew']))['report']->score();
+
+    expect($with)->toBe($without);
+});
+
+it('skips blank and duplicate related keyphrases, including the focus keyphrase', function (): void {
+    $data = AnalysisPanel::viewData(relatedContext(['', 'Best Coffee Beans for Espresso', 'espresso beans', 'Espresso Beans']));
+
+    expect(array_column($data['related'], 'keyphrase'))->toBe(['espresso beans']);
+});
+
+it('respects disabled checks for related keyphrases too', function (): void {
+    config(['rankforge.analysis.disabled_checks' => ['keyword-density']]);
+
+    $ids = array_map(fn ($r) => $r->id, AnalysisPanel::viewData(relatedContext(['espresso beans']))['related'][0]['report']->results);
+
+    expect($ids)->not->toContain('keyword-density')->and($ids)->not->toBeEmpty();
+});
+
+it('renders the related keyphrase rows only when there are related keyphrases', function (): void {
+    $with = renderPanel(relatedContext(['espresso beans']));
+    $without = renderPanel(relatedContext([]));
+
+    expect($with)->toContain('Related keyphrases')
+        ->and($with)->toContain('espresso beans')
+        ->and($with)->toContain('they don&#039;t change the overall score')
+        ->and($without)->not->toContain('class="rfl-related-btn"');
+});

@@ -56,6 +56,14 @@
         .rfl-group-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: .5rem .75rem; border-radius: .5rem; background: var(--rfl-soft); font-weight: 500; cursor: pointer; }
         .rfl-group-btn > span:first-child { display: flex; align-items: center; gap: .5rem; }
         .rfl-list { margin: .5rem 0 0; padding-inline-start: 1.75rem; list-style: disc; color: var(--rfl-muted); display: grid; gap: .25rem; }
+        .rfl-related { display: grid; gap: .5rem; }
+        .rfl-related-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+        .rfl-related-title { font-weight: 600; }
+        .rfl-related-hint { font-size: .75rem; color: var(--rfl-muted); }
+        .rfl-related-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .5rem .75rem; border-radius: .5rem; border: 1px solid var(--rfl-border); cursor: pointer; text-align: start; }
+        .rfl-related-btn > span:first-child { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+        .rfl-related-kp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .rfl-related-score { font-weight: 600; }
         .rfl-tabs { display: inline-flex; gap: .25rem; margin-bottom: .5rem; }
         .rfl-tab { padding: .25rem .625rem; border-radius: .375rem; background: var(--rfl-soft); cursor: pointer; }
         .rfl-tab[aria-pressed="true"] { background: rgb(17 24 39); color: #fff; font-weight: 600; }
@@ -127,6 +135,30 @@
             @endif
         @endforeach
     </div>
+
+    {{-- Related keyphrases: scored on their own, not part of the overall score --}}
+    @if (count($related))
+        <div class="rfl-related">
+            <div class="rfl-related-head">
+                <span class="rfl-related-title">{{ __('rankforge::rankforge.analysis.related_heading') }}</span>
+                <span class="rfl-related-hint">{{ __('rankforge::rankforge.analysis.related_hint') }}</span>
+            </div>
+            @foreach ($related as $item)
+                @php($relatedScore = $item['report']->score())
+                <div x-data="{ expanded: false }" wire:key="rfl-related-{{ md5($item['keyphrase']) }}">
+                    <button type="button" x-on:click="expanded = ! expanded" class="rfl-related-btn" x-bind:aria-expanded="expanded">
+                        <span><span class="rfl-dot rfl-tone-{{ $tone($relatedScore) }}"></span><span class="rfl-related-kp">{{ $item['keyphrase'] }}</span></span>
+                        <span class="rfl-related-score rfl-tone-{{ $tone($relatedScore) }}">{{ $relatedScore ?? '—' }}</span>
+                    </button>
+                    <ul x-show="expanded" x-cloak class="rfl-list">
+                        @foreach ([...$item['report']->failed(), ...$item['report']->warnings(), ...$item['report']->passed()] as $result)
+                            <li>{{ $result->message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     {{-- SERP preview --}}
     <div>

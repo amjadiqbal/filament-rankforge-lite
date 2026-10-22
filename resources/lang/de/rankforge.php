@@ -45,6 +45,8 @@ return [
         'x' => 'X',
         'linkedin' => 'LinkedIn',
         'no_image' => 'Kein Bild',
+        'related_heading' => 'Verwandte Keyphrasen',
+        'related_hint' => 'Werden einzeln bewertet und ändern die Gesamtpunktzahl nicht.',
         'upgrade_link' => 'Weiterleitungen, Sitemaps, KI-Ausfüllen oder OG-Bilder gesucht? Siehe RankForge',
     ],
 ];

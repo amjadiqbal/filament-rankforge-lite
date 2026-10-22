@@ -20,7 +20,7 @@ Free SEO for Filament 4 and 5. It adds meta, Open Graph and X (Twitter) fields t
 
 ## Features
 
-- **SEO fields** on any Eloquent model: focus keyphrase, meta title, meta description, canonical URL and robots directives. Up to 4 related keyphrases are saved with the record, but they aren't scored yet.
+- **SEO fields** on any Eloquent model: focus keyphrase, meta title, meta description, canonical URL and robots directives. Up to 4 related keyphrases each get their own score in the panel from the six keyword checks; they don't change the overall score.
 - **Social sharing**: Open Graph title, description and image, plus X (Twitter) card tags that follow them.
 - **Live analysis** while you type: an overall score, an SEO sub-score and a readability sub-score from 22 checks, grouped as failed, improvements and good results. Each check runs only when it applies: the keyphrase checks need a focus keyphrase, and the cornerstone depth check needs the cornerstone toggle.
 - **Readability checks** for sentence and paragraph length, passive voice, transition words, Flesch reading ease, subheading spread, consecutive sentence starts and word complexity.

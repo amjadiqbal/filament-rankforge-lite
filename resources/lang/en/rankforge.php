@@ -45,6 +45,8 @@ return [
         'x' => 'X',
         'linkedin' => 'LinkedIn',
         'no_image' => 'No image set',
+        'related_heading' => 'Related keyphrases',
+        'related_hint' => 'Scored on their own; they don\'t change the overall score.',
         'upgrade_link' => 'Need redirects, sitemaps, AI autofill or OG images? See RankForge',
     ],
 ];

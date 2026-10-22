@@ -45,6 +45,8 @@ return [
         'x' => 'X',
         'linkedin' => 'LinkedIn',
         'no_image' => 'Aucune image',
+        'related_heading' => 'Expressions clés associées',
+        'related_hint' => 'Notées séparément ; elles ne changent pas le score global.',
         'upgrade_link' => 'Besoin de redirections, de sitemaps, de remplissage par IA ou d’images OG ? Découvrez RankForge',
     ],
 ];

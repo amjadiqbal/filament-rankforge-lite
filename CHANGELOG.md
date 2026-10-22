@@ -4,6 +4,12 @@ All notable changes to `amjadiqbal/filament-rankforge-lite` are documented here,
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-10-22
+
+### Added
+
+- Related keyphrases are now scored. Each one gets its own row in the analysis panel with a score from the six keyword checks (title, meta description, slug, first paragraph, subheadings, density) and their messages. The overall score is unchanged; related keyphrases never affect it. Disabled checks are respected.
+
 ## [1.0.1] - 2026-10-21
 
 ### Fixed
