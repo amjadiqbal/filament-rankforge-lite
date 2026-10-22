@@ -20,13 +20,13 @@ Free SEO for Filament 4 and 5. It adds meta, Open Graph and X (Twitter) fields t
 
 ## Features
 
-- **SEO fields** on any Eloquent model: focus keyphrase, up to 4 related keyphrases, meta title, meta description, canonical URL and robots directives.
+- **SEO fields** on any Eloquent model: focus keyphrase, meta title, meta description, canonical URL and robots directives. Up to 4 related keyphrases are saved with the record, but they aren't scored yet.
 - **Social sharing**: Open Graph title, description and image, plus X (Twitter) card tags that follow them.
-- **Live analysis** while you type: an overall score, an SEO sub-score and a readability sub-score, with 22 checks grouped as failed, improvements and good results.
+- **Live analysis** while you type: an overall score, an SEO sub-score and a readability sub-score from 22 checks, grouped as failed, improvements and good results. Each check runs only when it applies: the keyphrase checks need a focus keyphrase, and the cornerstone depth check needs the cornerstone toggle.
 - **Readability checks** for sentence and paragraph length, passive voice, transition words, Flesch reading ease, subheading spread, consecutive sentence starts and word complexity.
-- **Six languages** of analysis: English, Spanish, French, German, Arabic and Urdu. The admin UI is translated into all six too.
+- **Six languages** of analysis: English, Spanish, French, German, Arabic and Urdu. For Arabic and Urdu there's no syllable counting or passive-voice detection yet, so Flesch reading ease and word complexity are skipped and passive voice reads 0%. The field labels and panel headings are translated into all six; the check messages are in English.
 - **SERP preview** for desktop and mobile, plus Facebook, X and LinkedIn card previews.
-- **Score column** for your tables: sortable, and coloured red, yellow or green.
+- **Score column** for your tables: sortable, and coloured with your panel's danger, warning and success colours (below 40, 40 to 69, and 70 or more; configurable).
 - **Front-end tags** from one Blade component: `<title>`, description, robots, canonical, hreflang, Open Graph and X cards.
 
 ## Supported versions
