@@ -151,8 +151,9 @@
                         <span class="rfl-related-score rfl-tone-{{ $tone($relatedScore) }}">{{ $relatedScore ?? '—' }}</span>
                     </button>
                     <ul x-show="expanded" x-cloak class="rfl-list">
+                        {{-- The shared engine words its messages for the focus keyphrase; name this one instead. --}}
                         @foreach ([...$item['report']->failed(), ...$item['report']->warnings(), ...$item['report']->passed()] as $result)
-                            <li>{{ $result->message }}</li>
+                            <li>{{ str_replace(['The focus keyphrase', 'the focus keyphrase'], ['This keyphrase', 'this keyphrase'], $result->message) }}</li>
                         @endforeach
                     </ul>
                 </div>

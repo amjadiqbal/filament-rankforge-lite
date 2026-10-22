@@ -123,3 +123,12 @@ it('renders the related keyphrase rows only when there are related keyphrases', 
         ->and($with)->toContain('they don&#039;t change the overall score')
         ->and($without)->not->toContain('class="rfl-related-btn"');
 });
+
+it('words related keyphrase messages for that keyphrase, not the focus keyphrase', function (): void {
+    $html = renderPanel(relatedContext(['french press']));
+    $related = substr($html, strpos($html, 'class="rfl-related"'));
+    $related = substr($related, 0, strpos($related, 'rfl-tabs'));
+
+    expect($related)->toContain('This keyphrase does not appear in the title.')
+        ->and($related)->not->toContain('The focus keyphrase');
+});
